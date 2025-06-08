@@ -1,0 +1,8 @@
+Evento:
+Nombre:Hola
+Ubicacion:Hola
+Descripcion:Holsa
+Fecha:03/03/2027
+Invitados:
+trinidad,tgarcia@uade.edu.ar
+---
