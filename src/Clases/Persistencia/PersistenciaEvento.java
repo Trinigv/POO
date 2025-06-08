@@ -13,7 +13,7 @@ import java.util.List;
 import Clases.Modelo.Evento;
 import Clases.Modelo.Invitado;
 
-public class PersistenciaEventos {
+public class PersistenciaEvento {
 
     public static void guardarEventosEnArchivo(String archivo, List<Evento> eventos) {
         try (BufferedWriter escritor = new BufferedWriter(new FileWriter(archivo))) {

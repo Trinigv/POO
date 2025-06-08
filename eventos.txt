@@ -8,8 +8,8 @@ trinidad,tgarcia@uade.edu.ar
 ---
 Evento:
 Nombre:Nuevo Evento
-Ubicacion:Test
-Descripcion:Esta es la descripcion del evento
+Ubicacion:Nueva Ubi
+Descripcion:Esta es la descripcion del eventodadasdad
 Fecha:03/03/2026
 Invitados:
 trinidad garcia,tgarcia@uade.edu.ar

@@ -17,10 +17,12 @@ public class GestionEvento extends JPanel {
         this.controlador = controlador;
         setLayout(new BorderLayout());
 
+        // Tabla
         table = new JTable();
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
 
+        // Panel inferior con botones
         JButton botonNuevoEvento = new JButton("Nuevo Evento");
         botonNuevoEvento.addActionListener(e -> controlador.abrirCrearNuevoEvento(this));
 
@@ -32,11 +34,8 @@ public class GestionEvento extends JPanel {
         panelBotones.add(botonGuardar);
         add(panelBotones, BorderLayout.SOUTH);
 
+        // Inicializo tabla
         controlador.actualizarTabla(this);
-
-        // Aquí asignamos el botón en la columna "Acción"
-        table.getColumn("Acción").setCellRenderer(new ButtonRenderer());
-        table.getColumn("Acción").setCellEditor(new ButtonController(this, controlador));
     }
 
     public JTable getTable() {
