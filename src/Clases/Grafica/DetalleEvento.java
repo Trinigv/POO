@@ -3,7 +3,7 @@ package Clases.Grafica;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import Clases.Controladores.ControladorEventos;
+import Clases.Controladores.ControladorEvento;
 import Clases.Modelo.Evento;
 
 import java.awt.*;
@@ -11,9 +11,9 @@ import java.awt.*;
 public class DetalleEvento extends JFrame {
 
     private Evento evento;
-    private ControladorEventos controlador;
+    private ControladorEvento controlador;
 
-    public DetalleEvento(Evento evento, ControladorEventos controlador) {
+    public DetalleEvento(Evento evento, ControladorEvento controlador) {
 
         this.evento = evento;
         this.controlador = controlador;

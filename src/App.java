@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
-import Clases.Controladores.ControladorEventos;
-import Clases.Grafica.GestionEventos;
+import Clases.Controladores.ControladorEvento;
+import Clases.Grafica.GestionEvento;
 
 
 public class App extends JFrame {
@@ -14,10 +14,10 @@ public class App extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // Crear instancia del gestor que maneja la lógica
-        ControladorEventos gestor = new ControladorEventos();
+        ControladorEvento gestor = new ControladorEvento();
 
         // Pasar el gestor a la interfaz
-        add(new GestionEventos(gestor), BorderLayout.CENTER);
+        add(new GestionEvento(gestor), BorderLayout.CENTER);
     }
 
     public static void main(String[] args) {

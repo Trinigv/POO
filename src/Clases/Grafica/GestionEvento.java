@@ -4,16 +4,16 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import Clases.Controladores.ButtonController;
-import Clases.Controladores.ControladorEventos;
+import Clases.Controladores.ControladorEvento;
 
 import java.awt.*;
 
-public class GestionEventos extends JPanel {
+public class GestionEvento extends JPanel {
 
     private JTable table;
-    private ControladorEventos controlador;
+    private ControladorEvento controlador;
 
-    public GestionEventos(ControladorEventos controlador) {
+    public GestionEvento(ControladorEvento controlador) {
         this.controlador = controlador;
         setLayout(new BorderLayout());
 

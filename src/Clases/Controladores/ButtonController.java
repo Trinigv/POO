@@ -6,16 +6,16 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.EventObject;
 
-import Clases.Grafica.GestionEventos;
+import Clases.Grafica.GestionEvento;
 
 public class ButtonController extends AbstractCellEditor implements TableCellEditor, ActionListener {
 
     private JButton button;
     private int currentRow;
-    private GestionEventos parent;
-    private ControladorEventos gestor;
+    private GestionEvento parent;
+    private ControladorEvento gestor;
 
-    public ButtonController(GestionEventos parent, ControladorEventos gestor) {
+    public ButtonController(GestionEvento parent, ControladorEvento gestor) {
         this.parent = parent;
         this.gestor = gestor;
         button = new JButton("Ver detalle");
