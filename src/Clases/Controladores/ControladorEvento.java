@@ -23,15 +23,13 @@ import Clases.Grafica.GestionEvento;
 public class ControladorEvento {
 
     private List<Evento> eventos;
+    private Evento eventoSeleccionado;
 
-    // Cargo datos del archivo desde el constructor
     public ControladorEvento() {
         eventos = PersistenciaEvento.cargarEventosDesdeArchivo("eventos.txt");
     }
 
-    // ------------------------------------CREAR NUEVO EVENTO--------------------------------------------------
-
-    // Abro nuevo frame
+    // ------------------------------------ CREAR NUEVO EVENTO ------------------------------------
     public void abrirCrearNuevoEvento(GestionEvento vista) {
         JFrame frame = new JFrame("Crear Nuevo Evento");
         CrearEvento crearEventoPanel = new CrearEvento(this, vista);
@@ -56,90 +54,133 @@ public class ControladorEvento {
         }
     }
 
-    // Agrego evento a la lista
     public void agregarEvento(Evento evento, GestionEvento vista) {
         eventos.add(evento);
         actualizarTabla(vista);
     }
 
     public void actualizarTabla(GestionEvento vista) {
-    DefaultTableModel model = new DefaultTableModel(
-        new String[]{"Nombre", "Ubicación", "Descripción", "Fecha", "Acción"}, 0) {
+        DefaultTableModel model = new DefaultTableModel(
+                new String[]{"Nombre", "Ubicación", "Descripción", "Fecha", "Acción"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 4;
+            }
+        };
 
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            // Todas las columnas son editables menos "Acción"
-            return column != 4;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        for (Evento e : eventos) {
+            model.addRow(new Object[]{
+                    e.getNombre(),
+                    e.getUbi(),
+                    e.getDesc(),
+                    e.getFecha().format(formatter),
+                    "Ver detalle"
+            });
         }
-    };
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    for (Evento e : eventos) {
-        model.addRow(new Object[]{
-            e.getNombre(),
-            e.getUbi(),
-            e.getDesc(),
-            e.getFecha().format(formatter),
-            "Ver detalle"
+        JTable table = vista.getTable();
+        table.setModel(model);
+
+        table.getColumn("Acción").setCellRenderer(new ButtonRenderer());
+        table.getColumn("Acción").setCellEditor(new ButtonController(vista, this));
+
+        model.addTableModelListener(e -> {
+            int fila = e.getFirstRow();
+            int columna = e.getColumn();
+            if (fila >= 0 && columna >= 0 && fila < eventos.size()) {
+                Evento evento = eventos.get(fila);
+                Object nuevoValor = model.getValueAt(fila, columna);
+
+                try {
+                    switch (columna) {
+                        case 0 -> evento.setNombre(nuevoValor.toString());
+                        case 1 -> evento.setUbi(nuevoValor.toString());
+                        case 2 -> evento.setDesc(nuevoValor.toString());
+                        case 3 -> {
+                            LocalDate fecha = LocalDate.parse(nuevoValor.toString(), formatter);
+                            evento.setFecha(fecha);
+                        }
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(vista, "Error al actualizar el evento: " + ex.getMessage());
+                    actualizarTabla(vista);
+                }
+            }
         });
     }
 
-    JTable table = vista.getTable();
-    table.setModel(model);
+    // ------------------------------------ DETALLE EVENTO ------------------------------------
 
-    // Botón en la columna "Acción"
-    table.getColumn("Acción").setCellRenderer(new ButtonRenderer());
-    table.getColumn("Acción").setCellEditor(new ButtonController(vista, this));
-
-    model.addTableModelListener(e -> {
-        int fila = e.getFirstRow();
-        int columna = e.getColumn();
-        if (fila >= 0 && columna >= 0 && fila < eventos.size()) {
-            Evento evento = eventos.get(fila);
-            Object nuevoValor = model.getValueAt(fila, columna);
-
-            try {
-                switch (columna) {
-                    case 0 -> evento.setNombre(nuevoValor.toString());
-                    case 1 -> evento.setUbi(nuevoValor.toString());
-                    case 2 -> evento.setDesc(nuevoValor.toString());
-                    case 3 -> {
-                        LocalDate fecha = LocalDate.parse(nuevoValor.toString(), formatter);
-                        evento.setFecha(fecha);
-                    }
-                }
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(vista, "Error al actualizar el evento: " + ex.getMessage());
-                // Restaurar valor anterior si hubo error
-                actualizarTabla(vista);
-            }
-        }
-    });
-}
-    // -------------------------------------FINALIZA CREAR EVENTO------------------------------------------------------------
-
-    // Guardar al archivo 
-    public void guardar() {
-        PersistenciaEvento.guardarEventosEnArchivo("eventos.txt", eventos);
-        JOptionPane.showMessageDialog(null, "Eventos guardados en eventos.txt");
-    }
-
-    // Muestro los detalles del evento
     public void mostrarDetalleEvento(int fila, GestionEvento vista) {
-        Evento evento = eventos.get(fila);
-        DetalleEvento detalle = new DetalleEvento(evento, this);
+        eventoSeleccionado = eventos.get(fila);
+        DetalleEvento detalle = new DetalleEvento(this, vista);
         detalle.setLocationRelativeTo(null);
         detalle.setVisible(true);
     }
 
-    // Logica para agregar invitado al evento
-    public void agregarInvitadoAEvento(Evento evento, String nombre, String email, DefaultListModel<String> listaModel) {
-        if (!nombre.isEmpty() && !email.isEmpty()) {
-            Invitado nuevo = new Invitado(nombre, email);
-            evento.addInvitado(nuevo);
-            listaModel.addElement(nombre + " - " + email);
-        } else {
-            JOptionPane.showMessageDialog(null, "Nombre y email no pueden estar vacíos.");
+    public String getNombreEvento() {
+        return eventoSeleccionado != null ? eventoSeleccionado.getNombre() : "";
+    }
+
+    public String getUbicacionEvento() {
+        return eventoSeleccionado != null ? eventoSeleccionado.getUbi() : "";
+    }
+
+    public LocalDate getFechaEvento() {
+        return eventoSeleccionado != null ? eventoSeleccionado.getFecha() : LocalDate.now();
+    }
+
+    public String getDescripcionEvento() {
+        return eventoSeleccionado != null ? eventoSeleccionado.getDesc() : "";
+    }
+
+    public List<Invitado> getInvitadosEvento() {
+        return eventoSeleccionado != null ? eventoSeleccionado.getInvitados() : List.of();
+    }
+
+    public void actualizarDatosEvento(String nuevoNombre, String nuevaUbicacion, String nuevaFechaStr,
+                                      String nuevaDescripcion, JFrame ventana, GestionEvento vista) {
+        if (eventoSeleccionado == null) {
+            JOptionPane.showMessageDialog(ventana, "No hay evento seleccionado.");
+            return;
+        }
+
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate nuevaFecha = LocalDate.parse(nuevaFechaStr, formatter);
+
+            eventoSeleccionado.setNombre(nuevoNombre);
+            eventoSeleccionado.setUbi(nuevaUbicacion);
+            eventoSeleccionado.setFecha(nuevaFecha);
+            eventoSeleccionado.setDesc(nuevaDescripcion);
+
+            actualizarTabla(vista);
+
+            JOptionPane.showMessageDialog(ventana, "Evento actualizado correctamente.");
+            ventana.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(ventana, "Error al actualizar evento: " + ex.getMessage());
         }
     }
-}  
+
+    public void agregarInvitado(String nombre, String email) {
+        if (eventoSeleccionado == null) {
+            JOptionPane.showMessageDialog(null, "No hay evento seleccionado.");
+            return;
+        }
+        if (nombre.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nombre y email no pueden estar vacíos.");
+            return;
+        }
+        Invitado nuevo = new Invitado(nombre, email);
+        eventoSeleccionado.addInvitado(nuevo);
+    }
+
+    // ------------------------------------ GUARDAR ------------------------------------
+
+    public void guardar() {
+        PersistenciaEvento.guardarEventosEnArchivo("eventos.txt", eventos);
+        JOptionPane.showMessageDialog(null, "Eventos guardados en eventos.txt");
+    }
+}

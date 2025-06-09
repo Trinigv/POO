@@ -1,10 +1,11 @@
 Evento:
-Nombre:Hola
-Ubicacion:Hola
-Descripcion:Holsa
-Fecha:03/03/2027
+Nombre:Nuevo Nombre2
+Ubicacion:Nueva Ubicacion 2
+Descripcion:Descripcion Nueva 2
+Fecha:03/03/2026
 Invitados:
 trinidad,tgarcia@uade.edu.ar
+julia,julia@uade.edu.ar
 ---
 Evento:
 Nombre:Nuevo Evento
@@ -13,4 +14,13 @@ Descripcion:Esta es la descripcion del eventodadasdad
 Fecha:03/03/2026
 Invitados:
 trinidad garcia,tgarcia@uade.edu.ar
+trinidad garcia,tgarcia@uade.edu.ar
+---
+Evento:
+Nombre:Nombre 2
+Ubicacion:Ubi2
+Descripcion:Desc2
+Fecha:03/03/2026
+Invitados:
+t,tgarcua@uade.edu.ar
 ---
