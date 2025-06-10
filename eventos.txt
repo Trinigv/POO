@@ -1,26 +1,35 @@
 Evento:
-Nombre:Nuevo Nombre2
-Ubicacion:Nueva Ubicacion 2
-Descripcion:Descripcion Nueva 2
+Nombre:Evento1
+Ubicacion:Ubicacion1
+Descripcion:Descripcion1
 Fecha:03/03/2026
 Invitados:
 trinidad,tgarcia@uade.edu.ar
 julia,julia@uade.edu.ar
+ajsdja@uade.edu.ar,ajsdja@uade.edu.ar
 ---
 Evento:
-Nombre:Nuevo Evento
-Ubicacion:Nueva Ubi
-Descripcion:Esta es la descripcion del eventodadasdad
-Fecha:03/03/2026
+Nombre:Evento2
+Ubicacion:Ubi2
+Descripcion:Esta es la descripcion del evento2
+Fecha:03/03/2027
 Invitados:
 trinidad garcia,tgarcia@uade.edu.ar
 trinidad garcia,tgarcia@uade.edu.ar
 ---
 Evento:
-Nombre:Nombre 2
-Ubicacion:Ubi2
-Descripcion:Desc2
-Fecha:03/03/2026
+Nombre:Evento3
+Ubicacion:Ubi3
+Descripcion:Desc3
+Fecha:03/03/2031
 Invitados:
 t,tgarcua@uade.edu.ar
+hola,hola@uade.edu.ar
+---
+Evento:
+Nombre:Evento4
+Ubicacion:Ubi4
+Descripcion:Esta es la descripcion del evento 4. 
+Fecha:03/04/2028
+Invitados:
 ---

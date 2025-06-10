@@ -85,29 +85,6 @@ public class ControladorEvento {
         table.getColumn("Acción").setCellRenderer(new ButtonRenderer());
         table.getColumn("Acción").setCellEditor(new ButtonController(vista, this));
 
-        model.addTableModelListener(e -> {
-            int fila = e.getFirstRow();
-            int columna = e.getColumn();
-            if (fila >= 0 && columna >= 0 && fila < eventos.size()) {
-                Evento evento = eventos.get(fila);
-                Object nuevoValor = model.getValueAt(fila, columna);
-
-                try {
-                    switch (columna) {
-                        case 0 -> evento.setNombre(nuevoValor.toString());
-                        case 1 -> evento.setUbi(nuevoValor.toString());
-                        case 2 -> evento.setDesc(nuevoValor.toString());
-                        case 3 -> {
-                            LocalDate fecha = LocalDate.parse(nuevoValor.toString(), formatter);
-                            evento.setFecha(fecha);
-                        }
-                    }
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(vista, "Error al actualizar el evento: " + ex.getMessage());
-                    actualizarTabla(vista);
-                }
-            }
-        });
     }
 
     // ------------------------------------ DETALLE EVENTO ------------------------------------

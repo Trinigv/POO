@@ -15,6 +15,7 @@ public class CrearEvento extends JPanel {
     private JTextArea txtDesc;
     private ControladorEvento controlador;
     private GestionEvento vistaPrincipal;
+    
 public CrearEvento(ControladorEvento controlador, GestionEvento vistaPrincipal) {
     this.controlador = controlador;
     this.vistaPrincipal = vistaPrincipal;

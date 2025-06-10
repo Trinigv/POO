@@ -13,11 +13,11 @@ public class ButtonController extends AbstractCellEditor implements TableCellEdi
     private JButton button;
     private int currentRow;
     private GestionEvento parent;
-    private ControladorEvento gestor;
+    private ControladorEvento controlador;
 
     public ButtonController(GestionEvento parent, ControladorEvento gestor) {
         this.parent = parent;
-        this.gestor = gestor;
+        this.controlador = gestor;
         button = new JButton("Ver detalle");
         button.addActionListener(this);
     }
@@ -36,9 +36,7 @@ public class ButtonController extends AbstractCellEditor implements TableCellEdi
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Llamamos al controlador para mostrar detalles
-        gestor.mostrarDetalleEvento(currentRow, parent);
-        // Detenemos la edición para que la celda vuelva a su estado normal
+        controlador.mostrarDetalleEvento(currentRow, parent);
         fireEditingStopped();
     }
 

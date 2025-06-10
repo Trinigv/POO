@@ -12,11 +12,11 @@ public class App extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
-        ControladorEvento gestor = new ControladorEvento();
+
+        ControladorEvento controlador = new ControladorEvento();
 
         // Pasar el gestor a la interfaz
-        add(new GestionEvento(gestor), BorderLayout.CENTER);
+        add(new GestionEvento(controlador), BorderLayout.CENTER);
     }
 
     public static void main(String[] args) {
